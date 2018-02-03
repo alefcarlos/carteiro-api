@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/alefcarlos/carteiro-api/repo"
 	"github.com/alefcarlos/carteiro-api/utils"
 
 	"github.com/alefcarlos/carteiro-api/models"
@@ -14,6 +15,7 @@ func PostNewSubscribe(c *gin.Context) {
 	//Obter o objeto a partir do body
 	if _err := c.ShouldBindJSON(&tracking); _err == nil {
 		//Adicionar novo objeto na listagem
+		repo.AddTracking(tracking)
 		utils.SendSuccess(c, "Novo monitoramento cadastrado com sucesso!")
 
 	} else {
