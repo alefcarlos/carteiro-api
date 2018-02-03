@@ -33,3 +33,12 @@ func SendBadRequest(c *gin.Context, message string) {
 
 	c.JSON(http.StatusBadRequest, _result)
 }
+
+//SendConflict axuliar para respotas de conflito
+func SendConflict(c *gin.Context, message string) {
+	_result := APIResultError{
+		Message: message,
+	}
+
+	c.JSON(http.StatusConflict, _result)
+}
