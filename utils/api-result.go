@@ -31,5 +31,5 @@ func SendBadRequest(c *gin.Context, message string) {
 		Message: message,
 	}
 
-	c.JSON(http.StatusOK, _result)
+	c.JSON(http.StatusBadRequest, _result)
 }

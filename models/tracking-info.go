@@ -9,21 +9,21 @@ type TrackingInfo struct {
 	LastDescription string `json:"description"`
 
 	//Address é a informação vinda do BotFramework que representa a identificação do usuário
-	Address BotFrameworkAddressInfo `json:"address" binding:"required"`
+	Address BotFrameworkAddressInfo `json:"address"`
 }
 
 //BotFrameworkAddressInfo informações do endereço do usuário vindo do bot https://docs.botframework.com/en-us/node/builder/chat-reference/interfaces/_botbuilder_d_.iaddress.html
 type BotFrameworkAddressInfo struct {
 	Bot          BotFrameworkIdentityInfo `json:"bot"`
-	ChannelID    string                   `json:"channelId"`
+	ChannelID    string                   `json:"channelId" binding:"required"`
 	Conversation BotFrameworkIdentityInfo `json:"conversation"`
 	User         BotFrameworkIdentityInfo `json:"user"`
-	ServiceURL   string                   `json:"serviceUrl"`
+	ServiceURL   string                   `json:"serviceUrl" binding:"required"`
 }
 
 //BotFrameworkIdentityInfo informações da identificação do BotFramework https://docs.botframework.com/en-us/node/builder/chat-reference/interfaces/_botbuilder_d_.iidentity.html
 type BotFrameworkIdentityInfo struct {
-	ID      string `json:"id"`
-	IsGroup bool   `json:"isGruop"`
-	Name    string `json:"name"`
+	ID      string `json:"id" binding:"required"`
+	IsGroup bool   `json:"isGruop" binding:"required"`
+	Name    string `json:"name" binding:"required"`
 }
