@@ -9,6 +9,8 @@ var Trackings = []models.TrackingInfo{}
 
 //AddTracking Adicionar um novo registro para monitoramento
 func AddTracking(item models.TrackingInfo) []models.TrackingInfo {
+	//Setar informação de identificação
+	item.ID = len(Trackings) + 1
 	_result := append(Trackings, item)
 	Trackings = _result
 	return Trackings
