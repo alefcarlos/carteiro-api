@@ -15,8 +15,8 @@ func PostNewSubscribe(c *gin.Context) {
 	//Obter o objeto a partir do body
 	if _err := c.ShouldBindJSON(&tracking); _err == nil {
 		//Adicionar novo objeto na listagem
-		if err := repo.AddTracking(tracking); err != nil {
-			utils.SendConflict(c, "O código já foi informado para monitoramento")
+		if _err = repo.AddTracking(tracking); _err != nil {
+			utils.SendConflict(c, _err.Error())
 		} else {
 			utils.SendSuccess(c, "Novo monitoramento cadastrado com sucesso!")
 		}
