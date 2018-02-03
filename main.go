@@ -7,13 +7,16 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+	r.GET("/status", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "pong",
+			"message": "tudo ok, porra",
 		})
 	})
 
 	r.GET("/trackings", handlers.GetTrakings)
+
+	r.POST("/subscribe", handlers.PostNewSubscribe)
+	r.PUT("/subscribe", handlers.NotImplementedYet)
 
 	r.Run(":3000")
 }

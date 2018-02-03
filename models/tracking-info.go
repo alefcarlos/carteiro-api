@@ -2,8 +2,9 @@ package models
 
 //TrackingInfo Informações do rastreio
 type TrackingInfo struct {
-	TrackingCode    string
-	LastType        int
-	LastStatus      int
-	LastDescription string
+	ID              int    `json:"id"`
+	TrackingCode    string `json:"code" binding:"required"`
+	LastType        string `json:"type"`
+	LastStatus      int    `json:"status"`
+	LastDescription string `json:"description"`
 }
