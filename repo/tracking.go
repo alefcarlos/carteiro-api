@@ -65,12 +65,10 @@ func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
 		return errors.ErrIDNotFound
 	}
 
-	_tracking := trackings[_trackingIndex]
-
-	_tracking.LastDescription = info.LastDescription
-	_tracking.LastStatus = info.LastStatus
-	_tracking.LastType = info.LastType
-	_tracking.IsSeen = false
+	trackings[_trackingIndex].LastDescription = info.LastDescription
+	trackings[_trackingIndex].LastStatus = info.LastStatus
+	trackings[_trackingIndex].LastType = info.LastType
+	trackings[_trackingIndex].IsSeen = false
 
 	return nil
 }
