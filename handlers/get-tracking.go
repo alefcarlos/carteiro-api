@@ -9,5 +9,5 @@ import (
 
 //GetTrakings retorna a lista de rastreios que têm novas informações
 func GetTrakings(c *gin.Context) {
-	utils.SendSuccess(c, repo.Trackings)
+	utils.SendSuccess(c, repo.GetTrackings())
 }

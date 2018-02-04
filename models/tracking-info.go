@@ -26,3 +26,8 @@ type BotFrameworkIdentityInfo struct {
 	IsGroup bool   `json:"isGruop"`
 	Name    string `json:"name" binding:"required"`
 }
+
+//IsDelivered valida se o rastreio já foi entregue
+func (item *TrackingInfo) IsDelivered() bool {
+	return (item.LastType == "BDI" || item.LastType == "BDE" || item.LastType == "BDR") && (item.LastStatus == 0 || item.LastStatus == 1)
+}

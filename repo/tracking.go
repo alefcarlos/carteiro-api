@@ -6,12 +6,15 @@ import (
 )
 
 //Trackings lista de itens a serem monitorados
-var Trackings = []models.TrackingInfo{}
+var trackings = []models.TrackingInfo{
+	models.TrackingInfo{ID: 1, LastStatus: 2, LastType: "a"},
+	models.TrackingInfo{ID: 1, LastStatus: 1, LastType: "BDI"},
+}
 
 //AddTracking Adicionar um novo registro para monitoramento
 func AddTracking(item models.TrackingInfo) error {
 	//Verificar se já existe códio registrado
-	_alreadyExists := Filter(Trackings, func(t models.TrackingInfo) bool {
+	_alreadyExists := Filter(trackings, func(t models.TrackingInfo) bool {
 		return item.TrackingCode == t.TrackingCode
 	})
 
@@ -21,11 +24,21 @@ func AddTracking(item models.TrackingInfo) error {
 	}
 
 	//Setar informação de identificação
-	item.ID = len(Trackings) + 1
-	_result := append(Trackings, item)
-	Trackings = _result
+	item.ID = len(trackings) + 1
+	_result := append(trackings, item)
+	trackings = _result
 
 	return nil
+}
+
+//GetTrackings Obtém todos os rastreios que ainda não foram entegues
+func GetTrackings() []models.TrackingInfo {
+	//Filtar somente o que ainda não foram entregues
+	_notDelivered := Filter(trackings, func(t models.TrackingInfo) bool {
+		return !t.IsDelivered()
+	})
+
+	return _notDelivered
 }
 
 // Filter returns a new slice holding only
