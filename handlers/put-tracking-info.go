@@ -3,6 +3,7 @@ package handlers
 import (
 	"strconv"
 
+	"github.com/alefcarlos/carteiro-api/errors"
 	"github.com/alefcarlos/carteiro-api/models"
 	"github.com/alefcarlos/carteiro-api/repo"
 	"github.com/alefcarlos/carteiro-api/utils"
@@ -29,7 +30,13 @@ func PutTrackingInfo(c *gin.Context) {
 	}
 
 	if _err = repo.UpdateTrackingInfo(_id, _info); _err != nil {
-		utils.SendBadRequest(c, _err.Error())
+		switch _err {
+		case errors.ErrIDNotFound:
+			utils.SendNotFound(c, _err.Error())
+		default:
+			utils.SendBadRequest(c, _err.Error())
+		}
+
 	} else {
 		utils.SendSuccess(c, "Informações atualizadas com sucesso.")
 	}

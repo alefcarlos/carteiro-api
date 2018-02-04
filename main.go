@@ -7,11 +7,8 @@ import (
 
 func main() {
 	r := gin.Default()
-	r.GET("/status", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "tudo ok, porra",
-		})
-	})
+
+	r.GET("/status", handlers.GetStatus)
 
 	_trackingGroup := r.Group("/tracking")
 	{
@@ -23,6 +20,11 @@ func main() {
 	_subscribeGroup := r.Group("/subscribe")
 	{
 		_subscribeGroup.POST("/", handlers.PostNewSubscribe)
+	}
+
+	_notify := r.Group("/notify")
+	{
+		_notify.POST("/all", handlers.NotImplementedYet)
 	}
 
 	r.Run(":3000")
