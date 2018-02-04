@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//PutSubscribeRead atualiza um registro como Lido
-func PutSubscribeRead(c *gin.Context) {
+//PutTrackingSeen atualiza um registro como Lido
+func PutTrackingSeen(c *gin.Context) {
 	//Obtém o registro através do id
 	_id, _err := strconv.Atoi(c.Param("id"))
 

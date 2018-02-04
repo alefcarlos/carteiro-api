@@ -34,7 +34,7 @@ func AddTracking(item models.TrackingInfo) (models.TrackingInfo, error) {
 func GetTrackings() []models.TrackingInfo {
 	//Filtar somente o que ainda não foram entregues
 	_notRead := Filter(trackings, func(t models.TrackingInfo) bool {
-		return !t.IsRead
+		return !t.IsSeen
 	})
 
 	return _notRead
@@ -47,7 +47,7 @@ func UpdateTrackingRead(id int) error {
 	})
 
 	if _trackingIndex >= 0 {
-		trackings[_trackingIndex].IsRead = true
+		trackings[_trackingIndex].IsSeen = true
 		return nil
 	}
 

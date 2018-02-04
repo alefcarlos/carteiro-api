@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//GetTrackings retorna a lista de rastreios que têm novas informações
-func GetTrackings(c *gin.Context) {
+//GetAvailableTrackings retorna a lista de rastreios que têm novas informações
+func GetAvailableTrackings(c *gin.Context) {
 	utils.SendSuccess(c, repo.GetTrackings())
 }

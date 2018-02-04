@@ -13,12 +13,17 @@ func main() {
 		})
 	})
 
-	r.GET("/trackings", handlers.GetTrackings)
-
-	_subscribe := r.Group("/subscribe")
+	_trackingGroup := r.Group("/tracking")
 	{
-		_subscribe.POST("/", handlers.PostNewSubscribe)
-		_subscribe.PUT("/read/:id", handlers.PutSubscribeRead)
+		_trackingGroup.GET("/", handlers.GetAvailableTrackings)
+		_trackingGroup.PUT("/id", handlers.NotImplementedYet)
+		_trackingGroup.PUT("/see/:id", handlers.PutTrackingSeen)
+
+	}
+
+	_subscribeGroup := r.Group("/subscribe")
+	{
+		_subscribeGroup.POST("/", handlers.PostNewSubscribe)
 	}
 
 	r.Run(":3000")
