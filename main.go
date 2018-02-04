@@ -17,7 +17,7 @@ func main() {
 	{
 		_trackingGroup.GET("/", handlers.GetAvailableTrackings)
 		_trackingGroup.PUT("/:id", handlers.PutTrackingInfo)
-		_trackingGroup.PUT("/:id/see", handlers.PutTrackingSeen)
+		_trackingGroup.PUT("/:id/seen", handlers.PutTrackingSeen)
 	}
 
 	_subscribeGroup := r.Group("/subscribe")

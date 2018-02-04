@@ -70,6 +70,7 @@ func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
 	_tracking.LastDescription = info.LastDescription
 	_tracking.LastStatus = info.LastStatus
 	_tracking.LastType = info.LastType
+	_tracking.IsSeen = false
 
 	return nil
 }
