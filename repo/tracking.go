@@ -6,13 +6,11 @@ import (
 )
 
 //Trackings lista de itens a serem monitorados
-var trackings = []models.TrackingInfo{
-	models.TrackingInfo{ID: 1, LastStatus: 2, LastType: "a"},
-	models.TrackingInfo{ID: 1, LastStatus: 1, LastType: "BDI"},
-}
+var trackings = []models.TrackingInfo{}
 
 //AddTracking Adicionar um novo registro para monitoramento
-func AddTracking(item models.TrackingInfo) error {
+//Retorna o item adicionado, só que agora com o ID
+func AddTracking(item models.TrackingInfo) (models.TrackingInfo, error) {
 	//Verificar se já existe códio registrado
 	_alreadyExists := Filter(trackings, func(t models.TrackingInfo) bool {
 		return item.TrackingCode == t.TrackingCode
@@ -20,7 +18,8 @@ func AddTracking(item models.TrackingInfo) error {
 
 	//Verificar se já não exste o mesmo elemento
 	if len(_alreadyExists) > 0 {
-		return errors.ErrTrackingCodeDuplicated
+		return models.TrackingInfo{}, errors.ErrTrackingCodeDuplicated
+		// return nil, errors.ErrTrackingCodeDuplicated
 	}
 
 	//Setar informação de identificação
@@ -28,17 +27,31 @@ func AddTracking(item models.TrackingInfo) error {
 	_result := append(trackings, item)
 	trackings = _result
 
-	return nil
+	return item, nil
 }
 
-//GetTrackings Obtém todos os rastreios que ainda não foram entegues
+//GetTrackings Obtém todos os monitoramentos que ainda não foram lidos
 func GetTrackings() []models.TrackingInfo {
 	//Filtar somente o que ainda não foram entregues
-	_notDelivered := Filter(trackings, func(t models.TrackingInfo) bool {
-		return !t.IsDelivered()
+	_notRead := Filter(trackings, func(t models.TrackingInfo) bool {
+		return !t.IsRead
 	})
 
-	return _notDelivered
+	return _notRead
+}
+
+//UpdateTrackingRead atualiza um registro como Lido
+func UpdateTrackingRead(id int) bool {
+	_trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
+		return t.ID == id
+	})
+
+	if _trackingIndex >= 0 {
+		trackings[_trackingIndex].IsRead = true
+		return true
+	}
+
+	return false
 }
 
 // Filter returns a new slice holding only
@@ -51,4 +64,18 @@ func Filter(s []models.TrackingInfo, fn func(models.TrackingInfo) bool) []models
 		}
 	}
 	return p
+}
+
+//Index retorna o index do item de acordo com fn()
+func Index(s []models.TrackingInfo, fn func(models.TrackingInfo) bool) int {
+	index := -1
+
+	for i, v := range s {
+		if fn(v) {
+			index = i
+			break
+		}
+	}
+
+	return index
 }

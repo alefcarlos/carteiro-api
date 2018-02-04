@@ -10,6 +10,8 @@ type TrackingInfo struct {
 
 	//Address é a informação vinda do BotFramework que representa a identificação do usuário numa determinada conversão e num determinado canal
 	Address BotFrameworkAddressInfo `json:"address"`
+
+	IsRead bool `json:"isRead"`
 }
 
 //BotFrameworkAddressInfo informações do endereço do usuário vindo do bot https://docs.botframework.com/en-us/node/builder/chat-reference/interfaces/_botbuilder_d_.iaddress.html

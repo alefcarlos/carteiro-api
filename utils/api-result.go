@@ -16,7 +16,7 @@ type APIResultOk struct {
 	Result interface{} `json:"result"`
 }
 
-//SendSuccess auxiliar para respostas de sucesso
+//SendSuccess auxiliar para respostas de 200 sucesso
 func SendSuccess(c *gin.Context, result interface{}) {
 	_result := APIResultOk{
 		Result: result,
@@ -25,7 +25,7 @@ func SendSuccess(c *gin.Context, result interface{}) {
 	c.JSON(http.StatusOK, _result)
 }
 
-//SendBadRequest auxiliar para respostas de erro
+//SendBadRequest auxiliar para respostas de 400 erro
 func SendBadRequest(c *gin.Context, message string) {
 	_result := APIResultError{
 		Message: message,
@@ -34,8 +34,17 @@ func SendBadRequest(c *gin.Context, message string) {
 	c.JSON(http.StatusBadRequest, _result)
 }
 
-//SendConflict axuliar para respotas de conflito
+//SendConflict axuliar para respotas de 409 conflito
 func SendConflict(c *gin.Context, message string) {
+	_result := APIResultError{
+		Message: message,
+	}
+
+	c.JSON(http.StatusConflict, _result)
+}
+
+//SendNotFound axuliar para respotas 404 - NotFound
+func SendNotFound(c *gin.Context, message string) {
 	_result := APIResultError{
 		Message: message,
 	}
