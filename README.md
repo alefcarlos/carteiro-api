@@ -5,7 +5,7 @@
 ## Pré-requisitos
 
 * [Go](https://golang.org/)
-* [Gin](https://github.com/gin-gonic/gin)
+* [godep](https://golang.github.io/dep/docs/introduction.html)
 
 ## Clonando repositório
 
@@ -13,9 +13,9 @@ Clona repositório no seu *$GOPATH$/src/github.com/alefcarlos*
 
 `git clone https://github.com/alefcarlos/carteiro-api.git`
 
-## Instalar gin
+## Instalar dependências, utilizando godep
 
-`go get github.com/gin-gonic/gin`
+`dep ensure`
 
 ## Rodando a aplicação
 
