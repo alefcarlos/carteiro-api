@@ -5,7 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func main() {
+//GetMainEngine obtém as configurações do server
+func GetMainEngine() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/status", handlers.GetStatus)
@@ -27,5 +28,9 @@ func main() {
 		_notify.POST("/all", handlers.NotImplementedYet)
 	}
 
-	r.Run(":3000")
+	return r
+}
+
+func main() {
+	GetMainEngine().Run(":3000")
 }
