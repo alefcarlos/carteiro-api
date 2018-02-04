@@ -49,5 +49,5 @@ func SendNotFound(c *gin.Context, message string) {
 		Message: message,
 	}
 
-	c.JSON(http.StatusConflict, _result)
+	c.JSON(http.StatusNotFound, _result)
 }

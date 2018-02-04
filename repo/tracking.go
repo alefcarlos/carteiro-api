@@ -41,17 +41,17 @@ func GetTrackings() []models.TrackingInfo {
 }
 
 //UpdateTrackingRead atualiza um registro como Lido
-func UpdateTrackingRead(id int) bool {
+func UpdateTrackingRead(id int) error {
 	_trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
 		return t.ID == id
 	})
 
 	if _trackingIndex >= 0 {
 		trackings[_trackingIndex].IsRead = true
-		return true
+		return nil
 	}
 
-	return false
+	return errors.ErrIDNotFound
 }
 
 // Filter returns a new slice holding only

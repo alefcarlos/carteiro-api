@@ -13,9 +13,14 @@ func PutSubscribeRead(c *gin.Context) {
 	//Obtém o registro através do id
 	_id, _err := strconv.Atoi(c.Param("id"))
 
-	if _err == nil && repo.UpdateTrackingRead(_id) {
+	if _err != nil {
+		utils.SendBadRequest(c, "Informe um Id válido.")
+		return
+	}
+
+	if _err = repo.UpdateTrackingRead(_id); _err == nil {
 		utils.SendSuccess(c, "Atualizado com sucesso.")
 	} else {
-		utils.SendNotFound(c, "O ID não foi encontrado.")
+		utils.SendNotFound(c, _err.Error())
 	}
 }
