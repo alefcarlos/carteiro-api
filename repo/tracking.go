@@ -54,6 +54,26 @@ func UpdateTrackingRead(id int) error {
 	return errors.ErrIDNotFound
 }
 
+//UpdateTrackingInfo atualiza as informações de rastreio de um registro
+func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
+
+	_trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
+		return t.ID == id
+	})
+
+	if _trackingIndex == -1 {
+		return errors.ErrIDNotFound
+	}
+
+	_tracking := trackings[_trackingIndex]
+
+	_tracking.LastDescription = info.LastDescription
+	_tracking.LastStatus = info.LastStatus
+	_tracking.LastType = info.LastType
+
+	return nil
+}
+
 // Filter returns a new slice holding only
 // the elements of s that satisfy fn()
 func Filter(s []models.TrackingInfo, fn func(models.TrackingInfo) bool) []models.TrackingInfo {
