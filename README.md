@@ -5,7 +5,7 @@
 ## Pré-requisitos
 
 * [Go](https://golang.org/)
-* [godep](https://golang.github.io/dep/docs/introduction.html)
+* [dep](https://golang.github.io/dep/docs/introduction.html)
 
 ## Clonando repositório
 
