@@ -30,14 +30,19 @@ func AddTracking(item models.TrackingInfo) (models.TrackingInfo, error) {
 	return item, nil
 }
 
-//GetTrackings Obtém todos os monitoramentos que ainda não foram lidos
-func GetTrackings() []models.TrackingInfo {
-	//Filtar somente o que ainda não foram entregues
-	_notRead := Filter(trackings, func(t models.TrackingInfo) bool {
-		return !t.IsSeen
-	})
+// //GetTrackings Obtém todos os monitoramentos que ainda não foram lidos
+// func GetTrackings() []models.TrackingInfo {
+// 	//Filtar somente o que ainda não foram entregues
+// 	_notRead := Filter(trackings, func(t models.TrackingInfo) bool {
+// 		return !t.IsSeen
+// 	})
 
-	return _notRead
+// 	return _notRead
+// }
+
+//GetTrackings Obtém todos os monitoramentos
+func GetTrackings() []models.TrackingInfo {
+	return trackings
 }
 
 //UpdateTrackingRead atualiza um registro como Lido
@@ -47,7 +52,7 @@ func UpdateTrackingRead(id int) error {
 	})
 
 	if _trackingIndex >= 0 {
-		trackings[_trackingIndex].IsSeen = true
+		trackings[_trackingIndex].MustNotify = true
 		return nil
 	}
 
@@ -68,7 +73,7 @@ func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
 	trackings[_trackingIndex].LastDescription = info.LastDescription
 	trackings[_trackingIndex].LastStatus = info.LastStatus
 	trackings[_trackingIndex].LastType = info.LastType
-	trackings[_trackingIndex].IsSeen = false
+	trackings[_trackingIndex].MustNotify = false
 
 	return nil
 }

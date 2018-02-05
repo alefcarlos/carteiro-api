@@ -3,6 +3,8 @@ package handlers
 import (
 	"strconv"
 
+	"github.com/gin-gonic/gin/binding"
+
 	"github.com/alefcarlos/carteiro-api/errors"
 	"github.com/alefcarlos/carteiro-api/models"
 	"github.com/alefcarlos/carteiro-api/repo"
@@ -24,7 +26,7 @@ func PutTrackingInfo(c *gin.Context) {
 	}
 
 	//Tentar realizar o bind do JSON
-	if _err := c.ShouldBindJSON(&_info); _err != nil {
+	if _err := c.ShouldBindWith(&_info, binding.JSON); _err != nil {
 		utils.SendBadRequest(c, _err.Error())
 		return
 	}
