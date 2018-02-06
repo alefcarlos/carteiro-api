@@ -12,20 +12,20 @@ var trackings = []models.TrackingInfo{}
 //Retorna o item adicionado, só que agora com o ID
 func AddTracking(item models.TrackingInfo) (models.TrackingInfo, error) {
 	//Verificar se já existe códio registrado
-	_alreadyExists := Filter(trackings, func(t models.TrackingInfo) bool {
+	alreadyExists := Filter(trackings, func(t models.TrackingInfo) bool {
 		return item.TrackingCode == t.TrackingCode
 	})
 
 	//Verificar se já não exste o mesmo elemento
-	if len(_alreadyExists) > 0 {
+	if len(alreadyExists) > 0 {
 		return models.TrackingInfo{}, errors.ErrTrackingCodeDuplicated
 		// return nil, errors.ErrTrackingCodeDuplicated
 	}
 
 	//Setar informação de identificação
 	item.ID = len(trackings) + 1
-	_result := append(trackings, item)
-	trackings = _result
+	result := append(trackings, item)
+	trackings = result
 
 	return item, nil
 }
@@ -47,12 +47,12 @@ func GetTrackings() []models.TrackingInfo {
 
 //UpdateTrackingRead atualiza um registro como Lido
 func UpdateTrackingRead(id int) error {
-	_trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
+	trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
 		return t.ID == id
 	})
 
-	if _trackingIndex >= 0 {
-		trackings[_trackingIndex].MustNotify = true
+	if trackingIndex >= 0 {
+		trackings[trackingIndex].MustNotify = true
 		return nil
 	}
 
@@ -62,18 +62,18 @@ func UpdateTrackingRead(id int) error {
 //UpdateTrackingInfo atualiza as informações de rastreio de um registro
 func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
 
-	_trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
+	trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
 		return t.ID == id
 	})
 
-	if _trackingIndex == -1 {
+	if trackingIndex == -1 {
 		return errors.ErrIDNotFound
 	}
 
-	trackings[_trackingIndex].LastDescription = info.LastDescription
-	trackings[_trackingIndex].LastStatus = info.LastStatus
-	trackings[_trackingIndex].LastType = info.LastType
-	trackings[_trackingIndex].MustNotify = false
+	trackings[trackingIndex].LastDescription = info.LastDescription
+	trackings[trackingIndex].LastStatus = info.LastStatus
+	trackings[trackingIndex].LastType = info.LastType
+	trackings[trackingIndex].MustNotify = false
 
 	return nil
 }

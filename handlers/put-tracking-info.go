@@ -15,28 +15,28 @@ import (
 
 //PutTrackingInfo atualiza as informações de status de um determinado tracking
 func PutTrackingInfo(c *gin.Context) {
-	_info := models.TrackingUpdateInfo{}
+	info := models.TrackingUpdateInfo{}
 
 	//Obtém o registro através do id
-	_id, _err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(c.Param("id"))
 
-	if _err != nil {
+	if err != nil {
 		utils.SendBadRequest(c, "Informe um Id válido.")
 		return
 	}
 
 	//Tentar realizar o bind do JSON
-	if _err := c.ShouldBindWith(&_info, binding.JSON); _err != nil {
-		utils.SendBadRequest(c, _err.Error())
+	if err := c.ShouldBindWith(&info, binding.JSON); err != nil {
+		utils.SendBadRequest(c, err.Error())
 		return
 	}
 
-	if _err = repo.UpdateTrackingInfo(_id, _info); _err != nil {
-		switch _err {
+	if err = repo.UpdateTrackingInfo(id, info); err != nil {
+		switch err {
 		case errors.ErrIDNotFound:
-			utils.SendNotFound(c, _err.Error())
+			utils.SendNotFound(c, err.Error())
 		default:
-			utils.SendBadRequest(c, _err.Error())
+			utils.SendBadRequest(c, err.Error())
 		}
 
 	} else {

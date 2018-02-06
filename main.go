@@ -1,43 +1,36 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/alefcarlos/carteiro-api/handlers"
-	"github.com/julienschmidt/httprouter"
+	"github.com/gin-gonic/gin"
 )
 
-//GetMainEngine obtém as configurações do server
-// func GetMainEngine() *gin.Engine {
-// 	r := gin.Default()
+// GetMainEngine obtém as configurações do server
+func GetMainEngine() *gin.Engine {
+	r := gin.Default()
 
-// 	r.GET("/status", handlers.GetStatus)
+	r.GET("/status", handlers.GetStatus)
 
-// 	_trackingGroup := r.Group("/tracking")
-// 	{
-// 		_trackingGroup.GET("/", handlers.GetAvailableTrackings)
-// 		_trackingGroup.PUT("/:id", handlers.PutTrackingInfo)
-// 		_trackingGroup.PUT("/:id/seen", handlers.PutTrackingSeen)
-// 	}
+	trackingGroup := r.Group("/tracking")
+	{
+		trackingGroup.GET("/", handlers.GetAvailableTrackings)
+		trackingGroup.PUT("/:id", handlers.PutTrackingInfo)
+		trackingGroup.PUT("/:id/seen", handlers.PutTrackingSeen)
+	}
 
-// 	_subscribeGroup := r.Group("/subscribe")
-// 	{
-// 		_subscribeGroup.POST("/", handlers.PostNewSubscribe)
-// 	}
+	subscribeGroup := r.Group("/subscribe")
+	{
+		subscribeGroup.POST("/", handlers.PostNewSubscribe)
+	}
 
-// 	_notify := r.Group("/notify")
-// 	{
-// 		_notify.POST("/all", handlers.NotImplementedYet)
-// 	}
+	notify := r.Group("/notify")
+	{
+		notify.POST("/all", handlers.NotImplementedYet)
+	}
 
-// 	return r
-// }
+	return r
+}
 
 func main() {
-	router := httprouter.New()
-
-	router.GET("/status", handlers.GetStatus)
-
-	log.Fatal(http.ListenAndServe(":8080", router))
+	GetMainEngine().Run(":8080")
 }

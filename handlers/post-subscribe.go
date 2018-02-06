@@ -14,15 +14,15 @@ func PostNewSubscribe(c *gin.Context) {
 	var tracking models.TrackingInfo
 
 	//Obter o objeto a partir do body
-	if _err := c.ShouldBindWith(&tracking, binding.JSON); _err == nil {
+	if err := c.ShouldBindWith(&tracking, binding.JSON); err == nil {
 		//Adicionar novo objeto na listagem
-		if _itemAdded, _err := repo.AddTracking(tracking); _err != nil {
-			utils.SendConflict(c, _err.Error())
+		if itemAdded, err := repo.AddTracking(tracking); err != nil {
+			utils.SendConflict(c, err.Error())
 		} else {
-			utils.SendSuccess(c, gin.H{"ID": _itemAdded.ID})
+			utils.SendSuccess(c, gin.H{"ID": itemAdded.ID})
 		}
 
 	} else {
-		utils.SendBadRequest(c, _err.Error())
+		utils.SendBadRequest(c, err.Error())
 	}
 }

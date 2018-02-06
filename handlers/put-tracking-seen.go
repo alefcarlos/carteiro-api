@@ -11,16 +11,16 @@ import (
 //PutTrackingSeen atualiza um registro como Lido
 func PutTrackingSeen(c *gin.Context) {
 	//Obtém o registro através do id
-	_id, _err := strconv.Atoi(c.Param("id"))
+	id, _err := strconv.Atoi(c.Param("id"))
 
 	if _err != nil {
 		utils.SendBadRequest(c, "Informe um Id válido.")
 		return
 	}
 
-	if _err = repo.UpdateTrackingRead(_id); _err == nil {
+	if _err = repo.UpdateTrackingRead(id); err == nil {
 		utils.SendSuccess(c, "Atualizado com sucesso.")
 	} else {
-		utils.SendNotFound(c, _err.Error())
+		utils.SendNotFound(c, err.Error())
 	}
 }
