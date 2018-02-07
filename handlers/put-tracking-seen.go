@@ -1,26 +1,27 @@
 package handlers
 
 import (
+	"net/http"
 	"strconv"
 
 	"github.com/alefcarlos/carteiro-api/repo"
 	"github.com/alefcarlos/carteiro-api/utils"
-	"github.com/gin-gonic/gin"
+	"github.com/julienschmidt/httprouter"
 )
 
 //PutTrackingSeen atualiza um registro como Lido
-func PutTrackingSeen(c *gin.Context) {
+func PutTrackingSeen(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	//Obtém o registro através do id
-	id, err := strconv.Atoi(c.Param("id"))
+	id, err := strconv.Atoi(ps.ByName("id"))
 
 	if err != nil {
-		utils.SendBadRequest(c, "Informe um Id válido.")
+		utils.SendJSONBadRequest(w, "Informe um Id válido.")
 		return
 	}
 
 	if err = repo.UpdateTrackingRead(id); err == nil {
-		utils.SendSuccess(c, "Atualizado com sucesso.")
+		utils.SendJSONSuccess(w, "Atualizado com sucesso.")
 	} else {
-		utils.SendNotFound(c, err.Error())
+		utils.SendJSONNotFound(w, err.Error())
 	}
 }

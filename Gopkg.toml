@@ -30,13 +30,12 @@
   version = "2.0.0"
 
 [[constraint]]
-  name = "github.com/gin-gonic/gin"
-  version = "1.2.0"
-
-[[constraint]]
   name = "github.com/stretchr/testify"
   version = "1.2.1"
 
 [prune]
   go-tests = true
   unused-packages = true
+[[constraint]]
+  name = "github.com/julienschmidt/httprouter"
+  version = "1.1.0"

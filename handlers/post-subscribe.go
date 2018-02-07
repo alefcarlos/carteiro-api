@@ -1,28 +1,35 @@
 package handlers
 
 import (
+	"encoding/json"
+	"net/http"
+
 	"github.com/alefcarlos/carteiro-api/repo"
 	"github.com/alefcarlos/carteiro-api/utils"
-	"github.com/gin-gonic/gin/binding"
+	"github.com/julienschmidt/httprouter"
 
 	"github.com/alefcarlos/carteiro-api/models"
-	"github.com/gin-gonic/gin"
 )
 
 //PostNewSubscribe permite adicionar um novo rastreio para monitoramento
-func PostNewSubscribe(c *gin.Context) {
+func PostNewSubscribe(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var tracking models.TrackingInfo
 
-	//Obter o objeto a partir do body
-	if err := c.ShouldBindWith(&tracking, binding.JSON); err == nil {
-		//Adicionar novo objeto na listagem
-		if itemAdded, err := repo.AddTracking(tracking); err != nil {
-			utils.SendConflict(c, err.Error())
-		} else {
-			utils.SendSuccess(c, gin.H{"ID": itemAdded.ID})
-		}
+	b, err := utils.ReadBody(r)
+	if err != nil {
+		utils.SendJSONBadRequest(w, err.Error())
+		return
+	}
 
+	err = json.Unmarshal(b, &tracking)
+	if err != nil {
+		utils.SendJSONBadRequest(w, err.Error())
+		return
+	}
+
+	if itemAdded, err := repo.AddTracking(tracking); err != nil {
+		utils.SendJSONConfict(w, err.Error())
 	} else {
-		utils.SendBadRequest(c, err.Error())
+		utils.SendJSONSuccess(w, itemAdded.ID)
 	}
 }

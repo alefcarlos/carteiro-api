@@ -1,9 +1,10 @@
 package utils
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
 )
 
 //APIResultError modelo padrão para respostas de erro da API
@@ -16,38 +17,60 @@ type APIResultOk struct {
 	Result interface{} `json:"result"`
 }
 
-//SendSuccess auxiliar para respostas de 200 sucesso
-func SendSuccess(c *gin.Context, object interface{}) {
+//SendJSONSuccess auxiliar para respostas de 200 sucesso
+func SendJSONSuccess(w http.ResponseWriter, object interface{}) {
 	result := APIResultOk{
 		Result: object,
 	}
 
-	c.JSON(http.StatusOK, result)
+	sendJSONReponseOK(w, result)
 }
 
-//SendBadRequest auxiliar para respostas de 400 erro
-func SendBadRequest(c *gin.Context, message string) {
+//SendJSONBadRequest auxiliar para respotas 400
+func SendJSONBadRequest(w http.ResponseWriter, message string) {
+	sendJSONReponseNotOK(w, message, http.StatusBadRequest)
+}
+
+//SendJSONConfict auxiliar para respotas 409
+func SendJSONConfict(w http.ResponseWriter, message string) {
+	sendJSONReponseNotOK(w, message, http.StatusConflict)
+}
+
+//SendJSONNotFound auxiliar para respotas 404
+func SendJSONNotFound(w http.ResponseWriter, message string) {
+	sendJSONReponseNotOK(w, message, http.StatusNotFound)
+}
+
+func sendJSONReponseOK(w http.ResponseWriter, object interface{}) {
+	js, err := json.Marshal(object)
+	if err != nil {
+		sendJSONReponseNotOK(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
+}
+
+func sendJSONReponseNotOK(w http.ResponseWriter, message string, statusCode int) {
 	result := APIResultError{
 		Message: message,
 	}
 
-	c.JSON(http.StatusBadRequest, result)
+	js, _ := json.Marshal(result)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(statusCode)
+	w.Write(js)
 }
 
-//SendConflict axuliar para respotas de 409 conflito
-func SendConflict(c *gin.Context, message string) {
-	_result := APIResultError{
-		Message: message,
+//ReadBody Lê o corpo e retorna um array de bytes
+func ReadBody(r *http.Request) ([]byte, error) {
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Printf("Error reading body: %v", err)
+		return nil, err
 	}
 
-	c.JSON(http.StatusConflict, _result)
-}
-
-//SendNotFound axuliar para respotas 404 - NotFound
-func SendNotFound(c *gin.Context, message string) {
-	result := APIResultError{
-		Message: message,
-	}
-
-	c.JSON(http.StatusNotFound, result)
+	return body, nil
 }

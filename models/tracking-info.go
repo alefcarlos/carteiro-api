@@ -13,6 +13,9 @@ type TrackingInfo struct {
 
 	//MustNotify indica se devemos notficar o usuário
 	MustNotify bool `json:"mustNotify"`
+
+	//IsRead indica se o usuário já leu essa notificação
+	IsRead bool `json:"isRead"`
 }
 
 //BotFrameworkAddressInfo informações do endereço do usuário vindo do bot https://docs.botframework.com/en-us/node/builder/chat-reference/interfaces/_botbuilder_d_.iaddress.html

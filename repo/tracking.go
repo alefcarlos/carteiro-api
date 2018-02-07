@@ -52,7 +52,7 @@ func UpdateTrackingRead(id int) error {
 	})
 
 	if trackingIndex >= 0 {
-		trackings[trackingIndex].MustNotify = true
+		trackings[trackingIndex].IsRead = true
 		return nil
 	}
 
@@ -73,7 +73,8 @@ func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
 	trackings[trackingIndex].LastDescription = info.LastDescription
 	trackings[trackingIndex].LastStatus = info.LastStatus
 	trackings[trackingIndex].LastType = info.LastType
-	trackings[trackingIndex].MustNotify = false
+	trackings[trackingIndex].MustNotify = true
+	trackings[trackingIndex].IsRead = false
 
 	return nil
 }

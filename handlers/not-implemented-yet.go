@@ -1,12 +1,13 @@
 package handlers
 
 import (
-	"github.com/alefcarlos/carteiro-api/utils"
+	"net/http"
 
-	"github.com/gin-gonic/gin"
+	"github.com/alefcarlos/carteiro-api/utils"
+	"github.com/julienschmidt/httprouter"
 )
 
 //NotImplementedYet apenas para testes
-func NotImplementedYet(c *gin.Context) {
-	utils.SendBadRequest(c, "Calma, gafanhoto, esse método ainda não foi implementado!")
+func NotImplementedYet(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	utils.SendJSONBadRequest(w, "Calma, gafanhoto, esse método ainda não foi implementado!")
 }

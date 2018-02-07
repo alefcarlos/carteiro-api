@@ -1,36 +1,17 @@
 package main
 
 import (
-	"github.com/alefcarlos/carteiro-api/handlers"
-	"github.com/gin-gonic/gin"
+	"log"
+	"net/http"
+
+	"github.com/alefcarlos/carteiro-api/router"
 )
 
-// GetMainEngine obtém as configurações do server
-func GetMainEngine() *gin.Engine {
-	r := gin.Default()
-
-	r.GET("/status", handlers.GetStatus)
-
-	trackingGroup := r.Group("/tracking")
-	{
-		trackingGroup.GET("/", handlers.GetAvailableTrackings)
-		trackingGroup.PUT("/:id", handlers.PutTrackingInfo)
-		trackingGroup.PUT("/:id/seen", handlers.PutTrackingSeen)
-	}
-
-	subscribeGroup := r.Group("/subscribe")
-	{
-		subscribeGroup.POST("/", handlers.PostNewSubscribe)
-	}
-
-	notify := r.Group("/notify")
-	{
-		notify.POST("/all", handlers.NotImplementedYet)
-	}
-
-	return r
-}
-
 func main() {
-	GetMainEngine().Run(":8080")
+
+	r := router.GetRouter()
+	log.Println("Estou escutando na porta 8080")
+
+	// Use the HostSwitch to listen and serve on port 12345
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
