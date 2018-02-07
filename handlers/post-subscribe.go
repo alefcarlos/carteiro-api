@@ -6,13 +6,12 @@ import (
 
 	"github.com/alefcarlos/carteiro-api/repo"
 	"github.com/alefcarlos/carteiro-api/utils"
-	"github.com/julienschmidt/httprouter"
 
 	"github.com/alefcarlos/carteiro-api/models"
 )
 
 //PostNewSubscribe permite adicionar um novo rastreio para monitoramento
-func PostNewSubscribe(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func PostNewSubscribe(w http.ResponseWriter, r *http.Request) {
 	var tracking models.TrackingInfo
 
 	b, err := utils.ReadBody(r)

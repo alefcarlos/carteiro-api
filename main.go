@@ -5,13 +5,17 @@ import (
 	"net/http"
 
 	"github.com/alefcarlos/carteiro-api/router"
+	"github.com/rs/cors"
 )
 
 func main() {
 
 	r := router.GetRouter()
-	log.Println("Estou escutando na porta 8080")
 
-	// Use the HostSwitch to listen and serve on port 12345
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Println("Estou escutando na porta 8080")
+	handler := cors.Default().Handler(r)
+	err := http.ListenAndServe(":8080", handler)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

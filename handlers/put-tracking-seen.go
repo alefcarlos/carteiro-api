@@ -10,7 +10,9 @@ import (
 )
 
 //PutTrackingSeen atualiza um registro como Lido
-func PutTrackingSeen(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func PutTrackingSeen(w http.ResponseWriter, r *http.Request) {
+	ps := r.Context().Value("params").(httprouter.Params) //Preciso obter os parâmetros a partir do contexto
+
 	//Obtém o registro através do id
 	id, err := strconv.Atoi(ps.ByName("id"))
 

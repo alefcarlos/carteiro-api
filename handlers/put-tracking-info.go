@@ -5,16 +5,17 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/julienschmidt/httprouter"
-
 	"github.com/alefcarlos/carteiro-api/errors"
 	"github.com/alefcarlos/carteiro-api/models"
 	"github.com/alefcarlos/carteiro-api/repo"
 	"github.com/alefcarlos/carteiro-api/utils"
+	"github.com/julienschmidt/httprouter"
 )
 
 //PutTrackingInfo atualiza as informações de status de um determinado tracking
-func PutTrackingInfo(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func PutTrackingInfo(w http.ResponseWriter, r *http.Request) {
+	ps := r.Context().Value("params").(httprouter.Params) //Preciso obter os parâmetros a partir do contexto
+
 	info := models.TrackingUpdateInfo{}
 
 	//Obtém o registro através do id

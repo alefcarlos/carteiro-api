@@ -53,6 +53,7 @@ func UpdateTrackingRead(id int) error {
 
 	if trackingIndex >= 0 {
 		trackings[trackingIndex].IsRead = true
+		trackings[trackingIndex].MustNotify = false
 		return nil
 	}
 

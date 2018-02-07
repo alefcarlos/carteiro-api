@@ -20,10 +20,22 @@
   version = "v1.1"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/justinas/alice"
+  packages = ["."]
+  revision = "03f45bd4b7dad4734bc4620e46a35789349abb20"
+
+[[projects]]
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/rs/cors"
+  packages = ["."]
+  revision = "7af7a1e09ba336d2ea14b1ce73bf693c6837dbf6"
+  version = "v1.2"
 
 [[projects]]
   name = "github.com/stretchr/testify"
@@ -34,6 +46,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "a7efd09cda5bde81d0de51e6d7ef50752c5b2af51f3a790a07197fbfba17306a"
+  inputs-digest = "987ca02c0247c252d3a3250291a2a4865d4bc31a94cf24f1c45fcf034ed03744"
   solver-name = "gps-cdcl"
   solver-version = 1
