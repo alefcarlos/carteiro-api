@@ -76,7 +76,7 @@ func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
 	trackings[trackingIndex].LastType = info.LastType
 	trackings[trackingIndex].MustNotify = true
 	trackings[trackingIndex].IsRead = false
-
+	trackings[trackingIndex].LastDestination = info.LastDestination
 	return nil
 }
 

@@ -7,6 +7,7 @@ type TrackingInfo struct {
 	LastType        string `json:"type"`
 	LastStatus      int    `json:"status"`
 	LastDescription string `json:"description"`
+	LastDestination string `json:"destination"`
 
 	//Address é a informação vinda do BotFramework que representa a identificação do usuário numa determinada conversão e num determinado canal
 	Address BotFrameworkAddressInfo `json:"address"`
