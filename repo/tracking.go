@@ -30,15 +30,15 @@ func AddTracking(item models.TrackingInfo) (models.TrackingInfo, error) {
 	return item, nil
 }
 
-// //GetTrackings Obtém todos os monitoramentos que ainda não foram lidos
-// func GetTrackings() []models.TrackingInfo {
-// 	//Filtar somente o que ainda não foram entregues
-// 	_notRead := Filter(trackings, func(t models.TrackingInfo) bool {
-// 		return !t.IsSeen
-// 	})
+//GetTrackingsToNotify lista todos os rastreios que devem ser notificados aos usuários
+func GetTrackingsToNotify() []models.TrackingInfo {
+	//Filtar somente o que ainda não foram entregues
+	_found := Filter(trackings, func(t models.TrackingInfo) bool {
+		return t.MustNotify
+	})
 
-// 	return _notRead
-// }
+	return _found
+}
 
 //GetTrackings Obtém todos os monitoramentos
 func GetTrackings() []models.TrackingInfo {
