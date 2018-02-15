@@ -31,15 +31,16 @@ func GetRouter() http.Handler {
 
 	r.GET("/status", wrapHandler(commomHandlers.ThenFunc(handlers.GetStatus)))
 
-	r.GET("/tracking", wrapHandler(commomHandlers.ThenFunc(handlers.GetAllTrackings)))
-	r.GET("/tracking/notify", wrapHandler(commomHandlers.ThenFunc(handlers.GetAvailableTrackings)))
+	// r.GET("/tracking/notify", wrapHandler(commomHandlers.ThenFunc(handlers.GetAvailableTrackings)))
 
-	r.PUT("/tracking/:id", wrapHandler(commomHandlers.ThenFunc(handlers.PutTrackingInfo)))
-	r.PUT("/tracking/:id/seen", wrapHandler(commomHandlers.ThenFunc(handlers.PutTrackingSeen)))
+	// r.PUT("/tracking/:id", wrapHandler(commomHandlers.ThenFunc(handlers.PutTrackingInfo)))
+	// r.PUT("/tracking/:id/seen", wrapHandler(commomHandlers.ThenFunc(handlers.PutTrackingSeen)))
 
-	r.POST("/subscribe", wrapHandler(commomHandlers.ThenFunc(handlers.PostNewSubscribe)))
+	r.GET("/subscriptions", wrapHandler(commomHandlers.ThenFunc(handlers.GetAllSubscriptions)))
+	r.POST("/subscriptions/get", wrapHandler(commomHandlers.ThenFunc(handlers.GetSubscription)))
+	r.POST("/subscriptions", wrapHandler(commomHandlers.ThenFunc(handlers.PostNewSubscribe)))
 
-	r.POST("/notify/all", wrapHandler(commomHandlers.ThenFunc(handlers.NotImplementedYet)))
+	// r.POST("/notify/all", wrapHandler(commomHandlers.ThenFunc(handlers.NotImplementedYet)))
 
 	return r
 }

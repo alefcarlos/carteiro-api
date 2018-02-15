@@ -1,4 +1,4 @@
-package models
+package apiModels
 
 //TrackingUpdateInfo modelo exclusivo para atualização das informações de rastreio
 type TrackingUpdateInfo struct {
