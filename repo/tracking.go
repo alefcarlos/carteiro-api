@@ -21,17 +21,7 @@ func AddTracking(entity apiModels.NewSubscription) (*models.Tracking, error) {
 	sub, err := GetSubscription(entity.Address)
 	if err != nil && err != mgo.ErrNotFound {
 		log.Printf("Erro ao tentar obter a inscrição %s", err.Error())
-	}
-
-	//Se não existir a inscrição, então devemos inserir e atualiza variável indexSub
-	if err == mgo.ErrNotFound {
-		sub = models.SubscribeInfo{
-			Address: entity.Address,
-		}
-
-		if err = AddSubscription(sub); err != nil {
-			return nil, err
-		}
+		return nil, err
 	}
 
 	//Verificar se o código de rastreio já existe

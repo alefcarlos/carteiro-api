@@ -3,13 +3,14 @@ package repo
 import (
 	"log"
 
+	"github.com/alefcarlos/carteiro-api/errors"
 	"github.com/alefcarlos/carteiro-api/models"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 //GetSubscription obtém uma inscrição a partir do endereço do cliente
-func GetSubscription(address models.BotFrameworkAddressInfo) (subscription models.SubscribeInfo, err error) {
+func GetSubscription(address models.BotFrameworkAddressInfo) (subscription *models.SubscribeInfo, err error) {
 	session := MongoSession.Copy()
 	defer session.Close()
 	collection := getCollection(session)
@@ -35,15 +36,26 @@ func GetSubscriptions() (result []models.SubscribeInfo, err error) {
 }
 
 //AddSubscription Adiciona uma nova inscrição de monitoramento
-func AddSubscription(entity models.SubscribeInfo) (err error) {
+func AddSubscription(entity models.SubscribeInfo) (model *models.SubscribeInfo, err error) {
 	session := MongoSession.Copy()
 	defer session.Close()
 	collection := getCollection(session)
+
+	subscription, err := GetSubscription(entity.Address)
+
+	if err != nil && err != mgo.ErrNotFound {
+		return nil, err
+	}
+
+	if subscription != nil {
+		return nil, errors.ErrTrackingCodeDuplicated
+	}
 
 	err = collection.Insert(entity)
 	if err != nil {
 		log.Printf("Não foi possível inserir um nova inscrição %s", err.Error())
 	}
+	model = &entity
 	return
 }
 
