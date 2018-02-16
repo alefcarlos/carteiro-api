@@ -13,7 +13,7 @@ import (
 func GetSubscription(address models.BotFrameworkAddressInfo) (subscription *models.SubscribeInfo, err error) {
 	session := MongoSession.Copy()
 	defer session.Close()
-	collection := getCollection(session)
+	collection := getSubscriptionCollection(session)
 
 	err = collection.Find(bson.M{"address.channelId": address.ChannelID, "address.conversation.id": address.Conversation.ID, "address.user.id": address.User.ID}).One(&subscription)
 	if err != nil {
@@ -26,7 +26,7 @@ func GetSubscription(address models.BotFrameworkAddressInfo) (subscription *mode
 func GetSubscriptions() (result []models.SubscribeInfo, err error) {
 	session := MongoSession.Copy()
 	defer session.Close()
-	collection := getCollection(session)
+	collection := getSubscriptionCollection(session)
 
 	err = collection.Find(bson.M{}).All(&result)
 	if err != nil {
@@ -39,7 +39,7 @@ func GetSubscriptions() (result []models.SubscribeInfo, err error) {
 func AddSubscription(entity models.SubscribeInfo) (model *models.SubscribeInfo, err error) {
 	session := MongoSession.Copy()
 	defer session.Close()
-	collection := getCollection(session)
+	collection := getSubscriptionCollection(session)
 
 	subscription, err := GetSubscription(entity.Address)
 
@@ -59,7 +59,7 @@ func AddSubscription(entity models.SubscribeInfo) (model *models.SubscribeInfo, 
 	return
 }
 
-func getCollection(session *mgo.Session) *mgo.Collection {
+func getSubscriptionCollection(session *mgo.Session) *mgo.Collection {
 	return session.DB("carteiro-db").C("subscriptions")
 }
 
