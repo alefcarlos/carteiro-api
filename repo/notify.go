@@ -44,10 +44,23 @@ func GetNotifications() (result []models.NotifyModel, err error) {
 	defer session.Close()
 	collection := getNotifyCollection(session)
 
-	err = collection.Find(bson.M{}).All(&result)
+	err = collection.Find(bson.M{"isRead": false}).All(&result)
 	if err != nil {
 		log.Printf("Não foi possível obter todas as notificações %s", err.Error())
 	}
+	return
+}
+
+//PutAllNotificationsRead atualiza todos os registros de notificações para lido
+func PutAllNotificationsRead() (changeInfo *mgo.ChangeInfo, err error) {
+	session := MongoSession.Copy()
+	defer session.Close()
+	collection := getNotifyCollection(session)
+
+	query := bson.M{}
+	change := bson.M{"$set": bson.M{"isRead": true}}
+	changeInfo, err = collection.UpdateAll(query, change)
+
 	return
 }
 

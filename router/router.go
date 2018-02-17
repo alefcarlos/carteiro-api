@@ -31,17 +31,18 @@ func GetRouter() http.Handler {
 
 	r.GET("/status", wrapHandler(commomHandlers.ThenFunc(handlers.GetStatus)))
 
-	// r.GET("/tracking/notify", wrapHandler(commomHandlers.ThenFunc(handlers.GetAvailableTrackings)))
-
 	// r.PUT("/tracking/:id", wrapHandler(commomHandlers.ThenFunc(handlers.PutTrackingInfo)))
-	// r.PUT("/tracking/:id/seen", wrapHandler(commomHandlers.ThenFunc(handlers.PutTrackingSeen)))
 
 	r.GET("/subscriptions", wrapHandler(commomHandlers.ThenFunc(handlers.GetAllSubscriptions)))
 	r.POST("/subscriptions/get", wrapHandler(commomHandlers.ThenFunc(handlers.GetSubscription)))
 	r.POST("/subscriptions", wrapHandler(commomHandlers.ThenFunc(handlers.PostNewSubscribe)))
 
 	r.POST("/tracking", wrapHandler(commomHandlers.ThenFunc(handlers.PostNewTracking)))
+	r.GET("/tracking/notify", wrapHandler(commomHandlers.ThenFunc(handlers.GetAvailableTrackings)))
+	r.PUT("/tracking/seen", wrapHandler(commomHandlers.ThenFunc(handlers.PutTrackingsSeen)))
+
 	r.POST("/notify/all", wrapHandler(commomHandlers.ThenFunc(handlers.PostNotifyAll)))
 	r.GET("/notify", wrapHandler(commomHandlers.ThenFunc(handlers.GetAllNotifications)))
+	r.PUT("/notify/seen", wrapHandler(commomHandlers.ThenFunc(handlers.PutAllNotificationsRead)))
 	return r
 }

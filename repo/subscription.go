@@ -63,28 +63,6 @@ func getSubscriptionCollection(session *mgo.Session) *mgo.Collection {
 	return session.DB("carteiro-db").C("subscriptions")
 }
 
-// //GetTrackingsToNotify lista todos os rastreios que devem ser notificados aos usuários
-// func GetTrackingsToNotify() []models.TrackingInfo {
-// 	//Filtar somente o que ainda não foram entregues
-// 	_found := Filter(trackings, func(t models.TrackingInfo) bool {
-// 		return t.MustNotify
-// 	})
-
-// 	return _found
-// }
-
-// //UpdateTrackingRead atualiza um registro como Lido
-// func UpdateTrackingRead(id int) error {
-// 	trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
-// 		return t.ID == id
-// 	})
-
-// 	if trackingIndex >= 0 {
-// 		trackings[trackingIndex].IsRead = true
-// 		trackings[trackingIndex].MustNotify = false
-// 		return nil
-// 	}
-
 // 	return errors.ErrIDNotFound
 // }
 

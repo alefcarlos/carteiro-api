@@ -15,7 +15,7 @@ import (
 func AddTracking(entity apiModels.NewSubscription) (*models.Tracking, error) {
 	session := MongoSession.Copy()
 	defer session.Close()
-	collection := session.DB("carteiro-db").C("subscriptions")
+	collection := getSubscriptionCollection(session)
 
 	//Validar se já existe essa inscrição
 	sub, err := GetSubscription(entity.Address)
@@ -51,5 +51,32 @@ func AddTracking(entity apiModels.NewSubscription) (*models.Tracking, error) {
 func addTracking(collection *mgo.Collection, subscriptionID bson.ObjectId, entity *models.Tracking) (err error) {
 	change := bson.M{"$push": bson.M{"trackings": entity}}
 	err = collection.Update(bson.M{"_id": subscriptionID}, change)
+	return
+}
+
+//GetTrackingsToNotify lista todos os rastreios que devem ser notificados aos usuários
+func GetTrackingsToNotify() (result []models.SubscribeInfo, err error) {
+	session := MongoSession.Copy()
+	defer session.Close()
+	collection := getSubscriptionCollection(session)
+
+	err = collection.Find(bson.M{"trackings.mustNotify": true}).All(&result)
+	if err != nil {
+		log.Printf("Não foi possível obter todas as trackings a serem notificadas%s", err.Error())
+	}
+
+	return
+}
+
+//SetTrackingsRead atualiza todos os registros de tracking para lido
+func SetTrackingsRead() (changeInfo *mgo.ChangeInfo, err error) {
+	session := MongoSession.Copy()
+	defer session.Close()
+	collection := getSubscriptionCollection(session)
+
+	query := bson.M{"trackings.mustNotify": true}
+	change := bson.M{"$set": bson.M{"trackings.$.isRead": true, "trackings.$.mustNotify": false}}
+	changeInfo, err = collection.UpdateAll(query, change)
+
 	return
 }
