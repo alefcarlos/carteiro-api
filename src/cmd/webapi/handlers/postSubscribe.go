@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/alefcarlos/carteiro-api/apiModels"
-	"github.com/alefcarlos/carteiro-api/models"
-	"github.com/alefcarlos/carteiro-api/repo"
-	"github.com/alefcarlos/carteiro-api/utils"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/apiModels"
+	"github.com/alefcarlos/carteiro-api/src/internal/models"
+	"github.com/alefcarlos/carteiro-api/src/internal/repo"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/utils"
 )
 
 //PostNewSubscribe adicionar uma nova inscrição de notificação

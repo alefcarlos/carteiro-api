@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/alefcarlos/carteiro-api/repo"
-	"github.com/alefcarlos/carteiro-api/utils"
+	"github.com/alefcarlos/carteiro-api/src/internal/repo"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/utils"
 )
 
 //GetAllNotifications retorna todas as notificações

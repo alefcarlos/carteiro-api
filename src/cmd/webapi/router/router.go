@@ -4,8 +4,8 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/alefcarlos/carteiro-api/handlers"
-	"github.com/alefcarlos/carteiro-api/middlewares"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/handlers"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/middlewares"
 	"github.com/julienschmidt/httprouter"
 	"github.com/justinas/alice"
 )

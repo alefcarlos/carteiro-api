@@ -3,16 +3,16 @@ package repo
 import (
 	"log"
 
-	"github.com/alefcarlos/carteiro-api/models"
+	"github.com/alefcarlos/carteiro-api/src/internal/models"
 
-	"github.com/alefcarlos/carteiro-api/apiModels"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/apiModels"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 //AddNotifyAll adiciona uma mensagem simples para todos que têm registro
 func AddNotifyAll(message *apiModels.NotifyMessage) (err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getNotifyCollection(session)
 
@@ -40,7 +40,7 @@ func AddNotifyAll(message *apiModels.NotifyMessage) (err error) {
 
 //GetNotifications Obtém todas as notificações que não foram lidas
 func GetNotifications() (result []models.NotifyModel, err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getNotifyCollection(session)
 
@@ -53,7 +53,7 @@ func GetNotifications() (result []models.NotifyModel, err error) {
 
 //PutAllNotificationsRead atualiza todos os registros de notificações para lido
 func PutAllNotificationsRead() (changeInfo *mgo.ChangeInfo, err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getNotifyCollection(session)
 

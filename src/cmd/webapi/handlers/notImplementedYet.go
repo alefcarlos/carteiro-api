@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/alefcarlos/carteiro-api/utils"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/utils"
 )
 
 //NotImplementedYet apenas para testes

@@ -3,9 +3,9 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/alefcarlos/carteiro-api/utils"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/utils"
 
-	"github.com/alefcarlos/carteiro-api/repo"
+	"github.com/alefcarlos/carteiro-api/src/internal/repo"
 )
 
 //GetAllSubscriptions retorna a lista de rastreios que têm novas informações

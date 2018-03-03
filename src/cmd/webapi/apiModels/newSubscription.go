@@ -1,6 +1,6 @@
 package apiModels
 
-import "github.com/alefcarlos/carteiro-api/models"
+import "github.com/alefcarlos/carteiro-api/src/internal/models"
 
 //NewSubscription Modelo utilizado na requisição POST /subscribe
 type NewSubscription struct {

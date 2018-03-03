@@ -3,15 +3,15 @@ package repo
 import (
 	"log"
 
-	"github.com/alefcarlos/carteiro-api/errors"
-	"github.com/alefcarlos/carteiro-api/models"
+	"github.com/alefcarlos/carteiro-api/src/internal/errors"
+	"github.com/alefcarlos/carteiro-api/src/internal/models"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
 //GetSubscription obtém uma inscrição a partir do endereço do cliente
 func GetSubscription(address models.BotFrameworkAddressInfo) (subscription *models.SubscribeInfo, err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getSubscriptionCollection(session)
 
@@ -24,7 +24,7 @@ func GetSubscription(address models.BotFrameworkAddressInfo) (subscription *mode
 
 //GetSubscriptions Obtém todos os monitoramentos
 func GetSubscriptions() (result []models.SubscribeInfo, err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getSubscriptionCollection(session)
 
@@ -37,7 +37,7 @@ func GetSubscriptions() (result []models.SubscribeInfo, err error) {
 
 //AddSubscription Adiciona uma nova inscrição de monitoramento
 func AddSubscription(entity models.SubscribeInfo) (model *models.SubscribeInfo, err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getSubscriptionCollection(session)
 

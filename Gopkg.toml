@@ -56,3 +56,7 @@
   root-package = "github.com/alefcarlos/carteiro-api"
   go-version = "1.9.3"
   install = [ "./..." ]
+
+[[constraint]]
+  name = "github.com/joho/godotenv"
+  version = "1.2.0"

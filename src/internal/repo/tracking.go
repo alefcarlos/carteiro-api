@@ -3,9 +3,9 @@ package repo
 import (
 	"log"
 
-	"github.com/alefcarlos/carteiro-api/apiModels"
-	"github.com/alefcarlos/carteiro-api/errors"
-	"github.com/alefcarlos/carteiro-api/models"
+	"github.com/alefcarlos/carteiro-api/src/cmd/webapi/apiModels"
+	"github.com/alefcarlos/carteiro-api/src/internal/errors"
+	"github.com/alefcarlos/carteiro-api/src/internal/models"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -13,7 +13,7 @@ import (
 //AddTracking Adicionar um novo registro para monitoramento
 //Retorna o item adicionado, só que agora com o ID
 func AddTracking(entity apiModels.NewSubscription) (*models.Tracking, error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getSubscriptionCollection(session)
 
@@ -56,7 +56,7 @@ func addTracking(collection *mgo.Collection, subscriptionID bson.ObjectId, entit
 
 //GetTrackingsToNotify lista todos os rastreios que devem ser notificados aos usuários
 func GetTrackingsToNotify() (result []models.SubscribeInfo, err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getSubscriptionCollection(session)
 
@@ -70,7 +70,7 @@ func GetTrackingsToNotify() (result []models.SubscribeInfo, err error) {
 
 //SetTrackingsRead atualiza todos os registros de tracking para lido
 func SetTrackingsRead() (changeInfo *mgo.ChangeInfo, err error) {
-	session := MongoSession.Copy()
+	session := GetMongoSession()
 	defer session.Close()
 	collection := getSubscriptionCollection(session)
 
