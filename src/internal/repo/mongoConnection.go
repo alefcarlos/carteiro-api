@@ -14,6 +14,7 @@ import (
 var (
 	mongoSession *mgo.Session
 	mongoURL     string
+	once         sync.Once
 
 	//MongoDB nome do banco de conexão do mongo
 	MongoDB string
@@ -25,8 +26,6 @@ var (
 //GetMongoSession retorna uma cópia da sessão de conexão do mongo.
 //Caso seja a primeira execução, então abre a conexão e retorna uma cópia.
 func GetMongoSession() *mgo.Session {
-	var once sync.Once
-
 	onceBody := func() {
 		err := initSession()
 
