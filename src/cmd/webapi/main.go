@@ -13,7 +13,7 @@ import (
 func main() {
 	err := godotenv.Load()
 	if err != nil {
-		panic(err)
+		log.Print("Não foi possível encontrar o arquiv .env")
 	}
 
 	r := router.GetRouter()

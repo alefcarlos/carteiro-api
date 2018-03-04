@@ -63,55 +63,6 @@ func getSubscriptionCollection(session *mgo.Session) *mgo.Collection {
 	return session.DB("carteiro-db").C("subscriptions")
 }
 
-// 	return errors.ErrIDNotFound
-// }
-
-// //UpdateTrackingInfo atualiza as informações de rastreio de um registro
-// func UpdateTrackingInfo(id int, info models.TrackingUpdateInfo) error {
-
-// 	trackingIndex := Index(trackings, func(t models.TrackingInfo) bool {
-// 		return t.ID == id
-// 	})
-
-// 	if trackingIndex == -1 {
-// 		return errors.ErrIDNotFound
-// 	}
-
-// 	trackings[trackingIndex].LastDescription = info.LastDescription
-// 	trackings[trackingIndex].LastStatus = info.LastStatus
-// 	trackings[trackingIndex].LastType = info.LastType
-// 	trackings[trackingIndex].MustNotify = true
-// 	trackings[trackingIndex].IsRead = false
-// 	trackings[trackingIndex].LastDestination = info.LastDestination
-// 	return nil
-// }
-
-// // Filter returns a new slice holding only
-// // the elements of s that satisfy fn()
-// func Filter(s []models.TrackingInfo, fn func(models.TrackingInfo) bool) []models.TrackingInfo {
-// 	var p []models.TrackingInfo // == nil
-// 	for _, v := range s {
-// 		if fn(v) {
-// 			p = append(p, v)
-// 		}
-// 	}
-// 	return p
-// }
-
-//IndexTracking retorna o index do item de acordo com fn()
-func IndexTracking(s []models.Tracking, fn func(models.Tracking) bool) int {
-	index := -1
-
-	for i, v := range s {
-		if fn(v) {
-			index = i
-			break
-		}
-	}
-
-	return index
-}
-
 //IndexSubscription retorna o index do item de acordo com fn()
 func IndexSubscription(s []models.SubscribeInfo, fn func(models.SubscribeInfo) bool) int {
 	index := -1
